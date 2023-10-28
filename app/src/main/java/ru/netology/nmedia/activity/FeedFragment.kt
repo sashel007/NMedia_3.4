@@ -78,6 +78,12 @@ class FeedFragment : Fragment() {
                 val shareIntent = Intent.createChooser(intent, "Выберите приложение")
                 startActivity(shareIntent)
             }
+
+            override fun onPostClicked(post: Post) {
+                val action = R.id.action_feedFragment_to_targetPostFragment
+                val bundle = bundleOf("postId" to post.id)
+                findNavController().navigate(action, bundle)
+            }
         })
         findNavController().navigateUp()
 

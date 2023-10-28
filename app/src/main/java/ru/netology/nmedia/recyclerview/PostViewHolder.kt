@@ -57,6 +57,9 @@ class PostViewHolder(
                     }
                 }.show()
             }
+            clickableView.setOnClickListener {
+                onInteractionListener.onPostClicked(post)
+            }
 
         }
     }

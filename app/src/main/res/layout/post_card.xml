@@ -168,7 +168,7 @@
         android:contentDescription="@string/views_amount"
         android:scaleType="fitCenter"
         android:src="@drawable/views_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/postCard"
         app:layout_constraintEnd_toStartOf="@id/viewsNumber"
         app:layout_constraintTop_toTopOf="@id/contentBarrier"
         app:layout_goneMarginTop="@dimen/common_spacing" />
@@ -179,9 +179,20 @@
         android:layout_height="wrap_content"
         android:text="@string/views"
         android:textColor="@color/icon_colors"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/postCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/contentBarrier"
         app:layout_goneMarginTop="@dimen/common_spacing" />
+
+    <View
+        android:id="@+id/clickableView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@id/postCard"
+        app:layout_constraintEnd_toEndOf="@id/postCard"
+        app:layout_constraintStart_toStartOf="@id/postCard"
+        app:layout_constraintTop_toTopOf="@id/postCard" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
