@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.recyclerview.OnInteractionListener
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryFileImpl
 
@@ -21,7 +22,17 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     )
     private val repository: PostRepository = PostRepositoryFileImpl(application)
     val data = repository.get()
-    val edited = MutableLiveData(empty)
+    private val edited = MutableLiveData(empty)
+
+
+    // Функции для установки обработчика взаимодействий и переменная для хранения
+    private var interactionListener: OnInteractionListener? = null
+    fun setInteractionListener(listener: OnInteractionListener) {
+        this.interactionListener = listener
+    }
+    fun getInteractionListener(): OnInteractionListener? {
+        return interactionListener
+    }
 
     fun like(id: Long) = repository.like(id)
     fun removeById(id: Long) = repository.removeById(id)

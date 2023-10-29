@@ -31,16 +31,7 @@ class FeedFragment : Fragment() {
 
         val viewModel: PostViewModel by activityViewModels()
 
-        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
-            result ?: return@registerForActivityResult
-            val (postId, content) = result
-            if (postId == 0L) {
-                viewModel.addNewPost(content)
-            } else {
-                viewModel.updatePost(postId, content)
-            }
-        }
-        val adapter = PostAdapter(object : OnInteractionListener {
+        val interactionListener = object : OnInteractionListener {
             override fun like(post: Post) {
                 viewModel.like(post.id)
             }
@@ -84,7 +75,12 @@ class FeedFragment : Fragment() {
                 val bundle = bundleOf("postId" to post.id)
                 findNavController().navigate(action, bundle)
             }
-        })
+
+        }
+
+        viewModel.setInteractionListener(interactionListener)
+
+        val adapter = PostAdapter(interactionListener)
         findNavController().navigateUp()
 
         binding.postList?.layoutManager = LinearLayoutManager(requireContext())

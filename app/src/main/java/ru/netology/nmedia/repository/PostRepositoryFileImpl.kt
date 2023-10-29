@@ -38,9 +38,10 @@ class PostRepositoryFileImpl(private val context: Context) : PostRepository {
     override fun like(id: Long) {
         posts = posts.map {
             if (it.id == id) {
+                val updatedLikeStatus = !it.likedByMe
                 it.copy(
-                    likedByMe = !it.likedByMe,
-                    likes = if (it.likedByMe) it.likes - 1 else it.likes + 1
+                    likedByMe = updatedLikeStatus,
+                    likes = if (updatedLikeStatus) it.likes + 1 else it.likes - 1
                 )
             } else {
                 it
