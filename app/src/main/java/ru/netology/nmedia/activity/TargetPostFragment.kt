@@ -13,11 +13,10 @@ import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.functions.formatAmount
 import ru.netology.nmedia.databinding.TargetPostLayoutBinding
-import ru.netology.nmedia.repository.PostRepositoryFileImpl
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class TargetPostFragment : Fragment() {
-    val sharedViewModel: PostViewModel by activityViewModels()
+    private val sharedViewModel: PostViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -27,8 +26,8 @@ class TargetPostFragment : Fragment() {
         val postId = args.postId
 
         // Получаем данные из репозитория по postId
-        val post = PostRepositoryFileImpl(requireContext()).getById(postId)
-        if (post != null) {
+        sharedViewModel.getPostById(postId).observe(viewLifecycleOwner) { post ->
+            post ?: return@observe
             binding.apply {
                 includedPostCard.author.text = post.author
                 includedPostCard.published.text = post.published
@@ -64,6 +63,7 @@ class TargetPostFragment : Fragment() {
                                     findNavController().navigateUp()
                                     true
                                 }
+
                                 R.id.edit -> {
                                     val action = R.id.action_targetPostFragment_to_newPostFragment
                                     val bundle = bundleOf(
@@ -73,6 +73,7 @@ class TargetPostFragment : Fragment() {
                                     findNavController().navigate(action, bundle)
                                     true
                                 }
+
                                 else -> false
                             }
                         }
